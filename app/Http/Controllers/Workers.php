@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Worker;
+use Faker\Core\Number;
 use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
 use PhpParser\Node\Scalar\String_;
@@ -17,7 +18,7 @@ class Workers extends Controller
      */
     public function index()
     {
-        //
+        return Worker::all();
     }
 
 
@@ -34,7 +35,7 @@ class Workers extends Controller
 
 
         Worker::create([
-            'Full name'=>$FullName,
+            'FullName'=>$FullName,
             'Age'=>$Age,
             'Email'=>$Email,
             'PhoneNumber'=>$PhoneNumber,
@@ -92,11 +93,12 @@ class Workers extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+
+
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = response()->json($request->input('id'))->original;
+        Worker::where('id', $id)->delete();
     }
 }

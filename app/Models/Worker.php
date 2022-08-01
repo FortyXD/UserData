@@ -9,7 +9,7 @@ class Worker extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'Full name',
+        'FullName',
         'Email',
         'Age',
         'PhoneNumber',

@@ -14,11 +14,13 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::get('/', [\App\Http\Controllers\Controller::class, 'index']);
+Route::get('/GetData', [\App\Http\Controllers\Workers::class, 'index']);
 Route::get('/Worker/Create', function (){
     return view('Create');
 });
 
 Route::post('/CreateWorker',[\App\Http\Controllers\Workers::class,'create']);
+Route::post('/DeleteWorker',[\App\Http\Controllers\Workers::class,'destroy']);
 
 Auth::routes();
 
