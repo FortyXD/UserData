@@ -1,7 +1,13 @@
 import ReactDOM from "react-dom";
-import React from "react";
+import React, {useState} from "react";
+import PhoneInput from 'react-phone-number-input'
+import 'react-phone-number-input/style.css'
 
 function CreateUser() {
+    const [PhoneNumber, SetPhoneNumber] = useState()
+    const [FullName, SetFullName] = useState()
+    const [Age, SetAge] = useState()
+    const [PhoneNumber, SetPhoneNumber] = useState()
     return (
        <div className='content mx-lg-4'>
            <div className="mb-3">
@@ -10,12 +16,15 @@ function CreateUser() {
 
            </div>
            <div className="mb-3">
-               <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-               <input type="text" className="form-control" id="exampleInputPassword1"/>
+               <label htmlFor="exampleInputPassword1" className="form-label">Возраст</label>
+               <input type="number" className="form-control"/>
            </div>
            <div className="mb-3">
-               <label htmlFor="exampleInputPassword1" className="form-label">Password</label>
-               <input type="text" className="form-control" id="exampleInputPassword1"/>
+               <label htmlFor="exampleInputPassword1" className="form-label">Номер Телефона</label>
+               <PhoneInput
+                   placeholder="Enter phone number"
+                   value={PhoneNumber}
+                   onChange={SetPhoneNumber}/>
            </div>
            <button type="submit" className="btn btn-primary">Submit</button>
        </div>
