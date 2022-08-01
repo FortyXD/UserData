@@ -18,6 +18,8 @@
         "vite": "^3.0.0"
     },
     "dependencies": {
-        "react-phone-number-input": "^3.2.6"
+        "react-phone-number-input": "^3.2.6",
+        "react-select": "^5.4.0",
+        "react-select-country-list": "^2.2.3"
     }
 }

@@ -2,7 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Worker;
 use Illuminate\Http\Request;
+use mysql_xdevapi\Exception;
+use PhpParser\Node\Scalar\String_;
+use function PHPUnit\Framework\isNull;
 
 class Workers extends Controller
 {
@@ -16,14 +20,28 @@ class Workers extends Controller
         //
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
+
+    public function create(Request $request)
     {
-        //
+
+        $FullName = response()->json($request->input('FullName'))->original;
+
+        $Age  = response()->json($request->input('Age'))->original;
+        $Email = response()->json($request->input('Email'))->original;
+        $PhoneNumber = response()->json($request->input('PhoneNumber'))->original;
+        $Country = response()->json($request->input('Country'))->original;
+        $JobTitle = response()->json($request->input('JobTitle'))->original;
+
+
+        Worker::create([
+            'Full name'=>$FullName,
+            'Age'=>$Age,
+            'Email'=>$Email,
+            'PhoneNumber'=>$PhoneNumber,
+            'Country'=>$Country,
+            'JobTitle'=>$JobTitle
+        ]);
+        return redirect('home');
     }
 
     /**

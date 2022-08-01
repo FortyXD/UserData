@@ -10,8 +10,10 @@ class Worker extends Model
     use HasFactory;
     protected $fillable = [
         'Full name',
-        'Position',
+        'Email',
         'Age',
-        'Office',
+        'PhoneNumber',
+        'Country',
+       'JobTitle'
     ];
 }

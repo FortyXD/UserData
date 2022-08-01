@@ -14,10 +14,13 @@ return new class extends Migration
     public function up()
     {
         Schema::create('workers', function (Blueprint $table) {
-            $table->string('Full name');
-            $table->string('Position');
-            $table->smallInteger('Age');
-            $table->string('Office');
+            $table->id();
+            $table->string('Full name')->default('');
+            $table->smallInteger('Age')->nullable();
+            $table->string('Email')->default('');
+            $table->string('PhoneNumber')->default('');
+            $table->string('Country')->default('');
+            $table->string('JobTitle')->nullable();
             $table->timestamps();
         });
     }

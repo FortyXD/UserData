@@ -18,6 +18,8 @@ Route::get('/Worker/Create', function (){
     return view('Create');
 });
 
+Route::post('/CreateWorker',[\App\Http\Controllers\Workers::class,'create']);
+
 Auth::routes();
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
