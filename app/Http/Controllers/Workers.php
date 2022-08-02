@@ -25,7 +25,7 @@ class Workers extends Controller
     public function create(Request $request)
     {
         $validatedData = $request->validate([
-            'FullName'=>'',
+            'FullName'=>'nullable',
             'Age'=>'nullable',
             'Email'=>'nullable',
             'PhoneNumber'=>'nullable',
@@ -65,23 +65,32 @@ class Workers extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
+
      */
-    public function show($id)
+    public function FindById(Request $request)
     {
-        //
+        $id = response()->json($request->input('id'))->original;
+       $Data =  Worker::where('id', $id)->get();
+        return ($Data);
     }
 
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(Request $request)
     {
-        //
+        $id = response()->json($request->input('id'))->original;
+        $validatedData = $request->validate([
+            'FullName'=>'nullable',
+            'Age'=>'nullable',
+            'Email'=>'nullable',
+            'PhoneNumber'=>'nullable',
+            'Country'=>'nullable',
+            'JobTitle'=>'nullable'
+        ]);
+        Worker::where('id', $id)->update($validatedData);
+        return(true);
     }
 
     /**

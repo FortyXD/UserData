@@ -15,11 +15,16 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [\App\Http\Controllers\Controller::class, 'index']);
 Route::get('/GetData', [\App\Http\Controllers\Workers::class, 'index']);
+
+Route::post('/GetDataById', [\App\Http\Controllers\Workers::class, 'FindById']);
+Route::post('/UpdateData', [\App\Http\Controllers\Workers::class, 'edit']);
+
 Route::get('/Worker/Create', function (){
     return view('Create');
 });
 
-Route::get('/worker/{id}',[App\Http\Controllers\EditController::class, 'index'])->name('Edit');
+
+//Route::get('/worker/{id}',[App\Http\Controllers\EditController::class, 'index'])->name('Edit');
 
 
 Route::post('/CreateWorker',[\App\Http\Controllers\Workers::class,'create']);

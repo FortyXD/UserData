@@ -42,7 +42,6 @@ function CreateUser() {
        control: (provided,state) => ({
            ...provided,
            background:'#f8fafc',
-           // none of react-select's styles are passed to <Control />
 
        }),
    }

@@ -4,6 +4,11 @@ import axios from "axios";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import '../../css/app.css'
+import ChangeData from "./ChangeData";
+
+
+
+
 
 class Table extends Component {
     constructor(props) {
@@ -55,9 +60,12 @@ class Table extends Component {
                         </Popup>
                     </td>
                     <td>
-                        <a href={'Worker/edit/'+i.id}>
-                            <button className="btn btn-primary">Изменить Данные</button>
-                        </a>
+
+                            <Popup trigger={<button className="btn btn-primary">Изменить Данные</button>} modal >
+                            <ChangeData Data={i}/>
+                            </Popup>
+
+
                     </td>
                     <td>
                         <button className="btn btn-danger" onClick={() => {
