@@ -24,24 +24,30 @@ class Workers extends Controller
 
     public function create(Request $request)
     {
+        $validatedData = $request->validate([
+            'FullName'=>'',
+            'Age'=>'nullable',
+            'Email'=>'nullable',
+            'PhoneNumber'=>'nullable',
+            'Country'=>'nullable',
+            'JobTitle'=>'nullable'
 
-        $FullName = response()->json($request->input('FullName'))->original;
-
-        $Age  = response()->json($request->input('Age'))->original;
-        $Email = response()->json($request->input('Email'))->original;
-        $PhoneNumber = response()->json($request->input('PhoneNumber'))->original;
-        $Country = response()->json($request->input('Country'))->original;
-        $JobTitle = response()->json($request->input('JobTitle'))->original;
-
-
-        Worker::create([
-            'FullName'=>$FullName,
-            'Age'=>$Age,
-            'Email'=>$Email,
-            'PhoneNumber'=>$PhoneNumber,
-            'Country'=>$Country,
-            'JobTitle'=>$JobTitle
         ]);
+//        $validated = $request->only(['FullName', 'Age']);
+//       $Data = json_encode($validatedData);
+
+
+
+//        $FullName = response()->json($request->input('FullName'))->original;
+//
+//        $Age  = response()->json($request->input('Age'))->original;
+//        $Email = response()->json($request->input('Email'))->original;
+//        $PhoneNumber = response()->json($request->input('PhoneNumber'))->original;
+//        $Country = response()->json($request->input('Country'))->original;
+//        $JobTitle = response()->json($request->input('JobTitle'))->original;
+
+
+        Worker::create($validatedData);
         return redirect('home');
     }
 

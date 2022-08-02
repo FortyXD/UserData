@@ -27,13 +27,15 @@ class Table extends Component {
 
 
         axios.get('/GetData').then(r => {
+
+
             let Temp = r.data.map(i =>
                 <tr key={i.id}>
-                    <th scope="row">{i.id}</th>
-                    <td>{i.FullName}</td>
-                    <td>{i.Age}</td>
-                    <td>{i.Email}</td>
-                    <td>{i.PhoneNumber}</td>
+                    <th scope="row">{i.id ==null?'Нет Данных': i.id }</th>
+                    <td>{i.FullName==null?'Нет Данных':i.FullName}</td>
+                    <td>{i.Age==null?'Нет Данных':i.Age}</td>
+                    <td>{i.Email==null?'Нет Данных':i.Email}</td>
+                    <td>{i.PhoneNumber==null?'Нет Данных':i.PhoneNumber}</td>
 
                     <td>
                         <Popup trigger={<button className="btn btn-success"> Дополнительные данные</button>} modal >
@@ -41,19 +43,21 @@ class Table extends Component {
                                <div >
                                    <h1>Основные данные</h1>
                                    <hr/>
-                                   <p>Имя, Фамилия, отчество - {i.FullName}</p>
-                                   <p>Возраст - {i.Age}</p>
-                                   <p>Email - {i.Email}</p>
-                                   <p>Телефонный номер - {i.Email}</p>
-                                   <p>Страна - {i.Country}</p>
-                                   <p>Специализация - {i.JobTitle}</p>
+                                   <p>Имя, Фамилия, отчество - {i.FullName==null?'Нет Данных':i.FullName}</p>
+                                   <p>Возраст - {i.Age==null?'Нет Данных':i.Age}</p>
+                                   <p>Email - {i.Email==null?'Нет Данных':i.Email}</p>
+                                   <p>Телефонный номер - {i.PhoneNumber==null?'Нет Данных':i.PhoneNumber}</p>
+                                   <p>Страна - {i.Country==null?'Нет Данных':i.Country}</p>
+                                   <p>Специализация - {i.JobTitle==null?'Нет Данных':i.JobTitle}</p>
                                </div>
 
                            </div>
                         </Popup>
                     </td>
                     <td>
-                        <button className="btn btn-primary">Изменить Данные</button>
+                        <a href={'Worker/edit/'+i.id}>
+                            <button className="btn btn-primary">Изменить Данные</button>
+                        </a>
                     </td>
                     <td>
                         <button className="btn btn-danger" onClick={() => {

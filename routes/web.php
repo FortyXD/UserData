@@ -19,6 +19,9 @@ Route::get('/Worker/Create', function (){
     return view('Create');
 });
 
+Route::get('/worker/{id}',[App\Http\Controllers\EditController::class, 'index'])->name('Edit');
+
+
 Route::post('/CreateWorker',[\App\Http\Controllers\Workers::class,'create']);
 Route::post('/DeleteWorker',[\App\Http\Controllers\Workers::class,'destroy']);
 
