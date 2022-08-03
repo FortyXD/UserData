@@ -20,6 +20,7 @@ function ChangeData(props) {
     const [IsChange, SetIschange] = useState(true)
 
 
+
     function UpdateData(id,FullName,Age,Email, PhoneNumber, Country,JobTitle){
         axios.post('/UpdateData',{
             id: props.Data.id,
@@ -30,7 +31,7 @@ function ChangeData(props) {
             Country: Country,
             JobTitle:JobTitle,
         }).then(()=>{
-            window.location.reload()
+            props.Ref.current.close();
         })
     }
 
@@ -43,12 +44,11 @@ function ChangeData(props) {
 
             if (JSON.stringify(props.Data) === JSON.stringify(r.data[0])) {
                 UpdateData( props.Data.id, FullName,Age,Email,PhoneNumber,Country,JobTitle)
+                props.Ref.current.close();
             } else {
                 SetIschange(false)
-
-
                 SetNewData(r.data[0])
-                console.log(NewData)
+
             }
         })
     }
@@ -118,10 +118,11 @@ function ChangeData(props) {
                         <button className='btn  btn-success' onClick={
                             ()=>{
                                 UpdateData(props.Data.id, FullName,Age,Email,PhoneNumber,Country,JobTitle)
+
                             }
                         }>Именить на свои данные</button>
                         <button className='btn btn-danger' onClick={()=>{
-                            window.location.reload()
+                            props.Ref.current.close();
                         }}>Оставить</button>
                     </div>
                     </div>

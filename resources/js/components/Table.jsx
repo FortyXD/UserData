@@ -1,5 +1,5 @@
 import ReactDOM from "react-dom";
-import React, {useState, Component} from "react";
+import React, { Component,} from "react";
 import axios from "axios";
 import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
@@ -13,6 +13,8 @@ import ChangeData from "./ChangeData";
 class Table extends Component {
     constructor(props) {
         super(props);
+        this.myRef = React.createRef();
+
         this.state = {
             Data: [],
             Table: ''
@@ -61,8 +63,8 @@ class Table extends Component {
                     </td>
                     <td>
 
-                            <Popup trigger={<button className="btn btn-primary">Изменить Данные</button>} modal >
-                            <ChangeData Data={i}/>
+                            <Popup ref ={this.myRef} trigger={<button className="btn btn-primary">Изменить Данные</button>} modal >
+                            <ChangeData Ref={this.myRef} Data={i}/>
                             </Popup>
 
 
@@ -82,9 +84,17 @@ class Table extends Component {
 
     }
 
+    // Repeat(){
+    //     setTimeout(()=>{
+    //         this.GetData();
+    //         this.Repeat()
+    //     },9000)
+    //
+    // }
 
     componentDidMount() {
         this.GetData();
+        // this.Repeat()
     }
 
     render() {
@@ -122,6 +132,8 @@ class Table extends Component {
 
                     </div>
                 </div>
+
+
             </div>
         );
     }

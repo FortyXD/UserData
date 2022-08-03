@@ -21,7 +21,7 @@ return new class extends Migration
             $table->string('PhoneNumber')->default('')->nullable();
             $table->string('Country')->default('')->nullable();
             $table->string('JobTitle')->nullable();
-            $table->timestamps();
+
         });
     }
 
