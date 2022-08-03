@@ -27,7 +27,8 @@ function CreateUser() {
             Country: Country.label,
             JobTitle:Job,
         }).then(r=>{
-            console.log('fdsfsd')
+                window.location.href = '../';
+
             }
         )
 }

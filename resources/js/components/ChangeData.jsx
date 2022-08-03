@@ -7,6 +7,7 @@ import axios from "axios";
 
 function ChangeData(props) {
 
+    const [NewData,SetNewData]=useState(props.Data)
 
     const [FullName, SetFullName] = useState(props.Data.FullName)
     const [Age, SetAge] = useState(props.Data.Age)
@@ -18,6 +19,21 @@ function ChangeData(props) {
 
     const [IsChange, SetIschange] = useState(true)
 
+
+    function UpdateData(id,FullName,Age,Email, PhoneNumber, Country,JobTitle){
+        axios.post('/UpdateData',{
+            id: props.Data.id,
+            FullName: FullName,
+            Age: Age,
+            Email: Email,
+            PhoneNumber: PhoneNumber,
+            Country: Country,
+            JobTitle:JobTitle,
+        }).then(()=>{
+            window.location.reload()
+        })
+    }
+
     function ChangeData() {
 
         axios.post('/GetDataById', {
@@ -26,21 +42,13 @@ function ChangeData(props) {
 
 
             if (JSON.stringify(props.Data) === JSON.stringify(r.data[0])) {
-                axios.post('/UpdateData',{
-                    id: props.Data.id,
-                    FullName: FullName,
-                    Age: Age,
-                    Email: Email,
-                    PhoneNumber: PhoneNumber,
-                    Country: Country,
-                    JobTitle:JobTitle,
-                }).then(()=>{
-                    alert('ok')
-                })
+                UpdateData( props.Data.id, FullName,Age,Email,PhoneNumber,Country,JobTitle)
             } else {
                 SetIschange(false)
 
-                alert('Not Ok')
+
+                SetNewData(r.data[0])
+                console.log(NewData)
             }
         })
     }
@@ -96,10 +104,28 @@ function ChangeData(props) {
                 </div>
                 :
                 <div>
-                    <h1>Внимание - Данные изменились</h1>
-                    <h1>Новые данные</h1>
-                    <hr/>
-                </div>
+                    <div>
+                        <h1>Основные данные</h1>
+                        <hr/>
+                        <p>Имя, Фамилия, отчество - {NewData.FullName==null?'Нет Данных':NewData.FullName}</p>
+                        <p>Возраст - {NewData.Age==null?'Нет Данных':NewData.Age}</p>
+                        <p>Email - {NewData.Email==null?'Нет Данных':NewData.Email}</p>
+                        <p>Телефонный номер - {NewData.PhoneNumber==null?'Нет Данных':NewData.PhoneNumber}</p>
+                        <p>Страна - {NewData.Country==null?'Нет Данных':NewData.Country}</p>
+                        <p>Специализация - {NewData.JobTitle==null?'Нет Данных':NewData.JobTitle}</p>
+                    </div>
+                    <div className='d-flex justify-content-between mx-3'>
+                        <button className='btn  btn-success' onClick={
+                            ()=>{
+                                UpdateData(props.Data.id, FullName,Age,Email,PhoneNumber,Country,JobTitle)
+                            }
+                        }>Именить на свои данные</button>
+                        <button className='btn btn-danger' onClick={()=>{
+                            window.location.reload()
+                        }}>Оставить</button>
+                    </div>
+                    </div>
+
 
 
             }
