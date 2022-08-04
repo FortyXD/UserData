@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('countries', function (Blueprint $table) {
             $table->id();
+            $table->string('Country')->default('')->nullable();
             $table->timestamps();
+
         });
     }
 

@@ -14,10 +14,13 @@ class Table extends Component {
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
+        this.RefId = React.createRef();
 
         this.state = {
             Data: [],
-            Table: ''
+            Table: '',
+            KeyTableCountry:'',
+            KeyTableJob:''
         }
     }
 
@@ -30,10 +33,10 @@ class Table extends Component {
     }
 
 
-    GetData = () => {
-
-
-        axios.get('/GetData').then(r => {
+    GetData = async() => {
+        this.state.Table=''
+        console.log('Ok')
+       await axios.get('/GetData').then(r => {
 
 
             let Temp = r.data.map(i =>
@@ -80,9 +83,50 @@ class Table extends Component {
                 Data: [r.data],
                 Table: Temp
             });
+
+        })
+        // console.log(this.state.Data)
+
+    }
+
+  async  GetKeys(){
+      await axios.post('/GetKeyById',{
+            Title:'Country'
+        }).then(r=>{
+           this.setState({
+               KeyTableCountry: r.data.map(i=>
+               <div key={i.Country} className='d-flex justify-content-between m-3 align-items-center'>
+                   <p>{i.Country}</p>
+                   <button className='btn btn-danger' onClick={async ()=>{await this.DeleteKeyData(i.Country,'Country'); await this.GetData(); await this.GetKeys()}}>Удалить ключ</button>
+               </div>)
+           })
+
+        })
+
+
+      await axios.post('/GetKeyById',{
+          Title:'Job'
+      }).then(r=>{
+          this.setState({
+              KeyTableJob: r.data.map(i=>
+                  <div key={i.JobTitle} className='d-flex justify-content-between m-3 align-items-center'>
+                      <p>{i.Job}</p>
+                      <button className='btn btn-danger' onClick={async ()=>{await this.DeleteKeyData(i.Job,'Job'); await this.GetData(); await this.GetKeys()}}>Удалить ключ</button>
+                  </div>)
+          })
+      })
+
+    }
+    //Я разьеденил обьекты KeyTableJob и KeyTableCountry потому, что я пытался их сложить и получалась два обьекта и при выводе было [object obkect]. можно ли как нибудь их Сложить. Если да то как.
+    async DeleteKeyData(Val, Table) {
+       await axios.post('/DeleteKey',{
+            Val:Val,
+            Table:Table
         })
 
     }
+
+
 
     // Repeat(){
     //     setTimeout(()=>{
@@ -95,6 +139,7 @@ class Table extends Component {
     componentDidMount() {
         this.GetData();
         // this.Repeat()
+        this.GetKeys();
     }
 
     render() {
@@ -130,6 +175,15 @@ class Table extends Component {
                             <tbody>{this.state.Table}</tbody>
                         </table>
 
+                        <Popup ref ={this.RefId} trigger={<button className="btn btn-primary">Данные о ключах</button>} modal >
+                            <h1>Данные о ключах Работ</h1>
+
+                            {this.state.KeyTableJob}
+                            <h1>Данные о ключах Стран</h1>
+                            {this.state.KeyTableCountry}
+                        </Popup>
+
+
                     </div>
                 </div>
 
@@ -137,6 +191,8 @@ class Table extends Component {
             </div>
         );
     }
+
+
 }
 
 export default Table;

@@ -41,13 +41,13 @@ function ChangeData(props) {
             id: props.Data.id
         }).then(r => {
 
-
-            if (JSON.stringify(props.Data) === JSON.stringify(r.data[0])) {
+            //ПОЧЕМУ Я ЕСЛИ ВЫВЕДУ props.Data === r.data это всегда фолс?
+            if (JSON.stringify(props.Data) === JSON.stringify(r.data)) {
                 UpdateData( props.Data.id, FullName,Age,Email,PhoneNumber,Country,JobTitle)
                 props.Ref.current.close();
             } else {
                 SetIschange(false)
-                SetNewData(r.data[0])
+                SetNewData(r.data)
 
             }
         })
@@ -126,12 +126,7 @@ function ChangeData(props) {
                         }}>Оставить</button>
                     </div>
                     </div>
-
-
-
             }
-
-
         </div>
     );
 }

@@ -19,9 +19,9 @@ return new class extends Migration
             $table->smallInteger('Age')->nullable()->nullable();
             $table->string('Email')->default('')->nullable();
             $table->string('PhoneNumber')->default('')->nullable();
-            $table->string('Country')->default('')->nullable();
-            $table->string('JobTitle')->nullable();
-
+            $table->integer('Country');
+            $table->integer('JobTitle');
+            $table->timestamps();
         });
     }
 

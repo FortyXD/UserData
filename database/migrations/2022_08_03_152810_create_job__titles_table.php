@@ -15,7 +15,9 @@ return new class extends Migration
     {
         Schema::create('job__titles', function (Blueprint $table) {
             $table->id();
-            $table->string('Job')
+            $table->string('Job')->default('')->nullable();
+            $table->timestamps();
+
         });
     }
 
