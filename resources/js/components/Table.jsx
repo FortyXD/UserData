@@ -5,7 +5,8 @@ import Popup from 'reactjs-popup';
 import 'reactjs-popup/dist/index.css';
 import '../../css/app.css'
 import ChangeData from "./ChangeData";
-
+import './ChangeKey'
+import ChangeKey from "./ChangeKey";
 
 
 
@@ -35,7 +36,7 @@ class Table extends Component {
 
     GetData = async() => {
         this.state.Table=''
-        console.log('Ok')
+
        await axios.get('/GetData').then(r => {
 
 
@@ -67,7 +68,7 @@ class Table extends Component {
                     <td>
 
                             <Popup ref ={this.myRef} trigger={<button className="btn btn-primary">Изменить Данные</button>} modal >
-                            <ChangeData Ref={this.myRef} Data={i}/>
+                            <ChangeData  ChangeData={this.GetData} Ref={this.myRef} Data={i}/>
                             </Popup>
 
 
@@ -93,12 +94,20 @@ class Table extends Component {
       await axios.post('/GetKeyById',{
             Title:'Country'
         }).then(r=>{
+            let Temp = r.data.map(i=>
+
+                <div key={i.Country} className='d-flex justify-content-between m-3 align-items-center'>
+                    <div className='d-flex align-items-center mx-3'>
+                        <p className='m-0 mx-3'>{i.Country}</p>
+                        <button className='btn btn-danger' onClick={async ()=>{await this.DeleteKeyData(i.Country,'Country'); await this.GetData(); await this.GetKeys()}}>Удалить ключ</button>
+                    </div>
+
+                    <div>
+                        <ChangeKey Table='Country' id={i.id}  Getkeys={this.GetKeys} ChangeData={this.GetData} Country ={i.Country}/>
+                    </div>
+                </div>)
            this.setState({
-               KeyTableCountry: r.data.map(i=>
-               <div key={i.Country} className='d-flex justify-content-between m-3 align-items-center'>
-                   <p>{i.Country}</p>
-                   <button className='btn btn-danger' onClick={async ()=>{await this.DeleteKeyData(i.Country,'Country'); await this.GetData(); await this.GetKeys()}}>Удалить ключ</button>
-               </div>)
+               KeyTableCountry: Temp
            })
 
         })
@@ -110,8 +119,13 @@ class Table extends Component {
           this.setState({
               KeyTableJob: r.data.map(i=>
                   <div key={i.JobTitle} className='d-flex justify-content-between m-3 align-items-center'>
-                      <p>{i.Job}</p>
-                      <button className='btn btn-danger' onClick={async ()=>{await this.DeleteKeyData(i.Job,'Job'); await this.GetData(); await this.GetKeys()}}>Удалить ключ</button>
+                      <div className='d-flex align-items-center mx-3'>
+                          <p className='m-0 mx-3'>{i.Job}</p>
+                          <button className='btn btn-danger' onClick={async ()=>{await this.DeleteKeyData(i.Job,'Job'); await this.GetData(); await this.GetKeys()}}>Удалить ключ</button>
+                      </div>
+                      <div>
+                          <ChangeKey Table='Job' id={i.id}  Getkeys={this.GetKeys} ChangeData={this.GetData} Country ={i.Job}/>
+                      </div>
                   </div>)
           })
       })

@@ -11,6 +11,7 @@ use Illuminate\Http\Request;
 use mysql_xdevapi\Exception;
 use PhpParser\Node\Scalar\String_;
 use function PHPUnit\Framework\isNull;
+use function Symfony\Component\String\b;
 
 class Workers extends Controller
 {
@@ -19,7 +20,6 @@ class Workers extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-
 
 
 //      $Age  = response()->json($request->input('Age'))->original;
@@ -74,7 +74,6 @@ class Workers extends Controller
 
 
         Worker::create($validatedData);
-
 
 
 //        $validated = $request->only(['FullName', 'Age']);
@@ -178,14 +177,32 @@ class Workers extends Controller
         $Key = response()->json($request->input('Title'))->original;
         switch ($Key) {
             case 'Country':
-                return Country::all('Country');
+                return Country::all();
             case 'Job':
-                return Job_Title::all('Job');
+                return Job_Title::all();
             default:
                 return 0;
         }
 
 
+    }
+
+    public function ChangeId(Request $request)
+    {
+        $A = $request->all();
+
+        switch ($A['Table']) {
+            case 'Country':
+                Country::where('id', $A['id'])->update([
+                    'Country' => $A['New']
+                ]);
+                break;
+            case 'Job':
+                Job_Title::where('id', $A['id'])->update([
+                    'Job' => $A['New']
+                ]);
+                break;
+        }
     }
 
     public function Delete_key(Request $request)
@@ -205,4 +222,26 @@ class Workers extends Controller
         }
 
     }
+
+
+    public function CheckId(Request $request)
+    {
+
+        $A = $request->all();
+        switch ($A['Table']) {
+            case 'Country':
+                if (Country::where('id', $A['id'])->first()->Country == $A['Old']) return true;
+                else return Country::where('id', $A['id'])->first()->Country;
+                break;
+            case 'Job':
+
+                if (Job_Title::where('id', $A['id'])->first()->Job == $A['Old']) {return true;}
+                else {
+                    return  Job_Title::where('id', $A['id'])->first()->Job;
+                }
+        }
+
+    }
 }
+
+

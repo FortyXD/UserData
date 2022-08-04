@@ -33,8 +33,11 @@ Route::get('/Worker/Create', function (){
     return view('Create');
 });
 
-//Я подобное делал в одном другом своем проекте, но тут в контролере он выдает ошибку на {id}. Почему так. P.s я из своего другово проекта копи паст, и не работало *_*
-//Route::get('/worker/{id}',[App\Http\Controllers\EditController::class, 'index'])->name('Edit');
+
+Route::post('/ChangeKey', [\App\Http\Controllers\Workers::class, 'ChangeId']);
+
+
+Route::post('/CheckIfIsNew', [\App\Http\Controllers\Workers::class, 'CheckId']);
 
 //Создание рабочего
 Route::post('/CreateWorker',[\App\Http\Controllers\Workers::class,'create']);

@@ -7,6 +7,9 @@ import axios from "axios";
 
 function ChangeData(props) {
 
+
+    // Как мне вызвать из родительского компонента функцию ?
+
     const [NewData,SetNewData]=useState(props.Data)
 
     const [FullName, SetFullName] = useState(props.Data.FullName)
@@ -21,6 +24,7 @@ function ChangeData(props) {
 
 
 
+
     function UpdateData(id,FullName,Age,Email, PhoneNumber, Country,JobTitle){
         axios.post('/UpdateData',{
             id: props.Data.id,
@@ -32,6 +36,7 @@ function ChangeData(props) {
             JobTitle:JobTitle,
         }).then(()=>{
             props.Ref.current.close();
+            props.ChangeData();
         })
     }
 
@@ -41,7 +46,7 @@ function ChangeData(props) {
             id: props.Data.id
         }).then(r => {
 
-            //ПОЧЕМУ Я ЕСЛИ ВЫВЕДУ props.Data === r.data это всегда фолс?
+
             if (JSON.stringify(props.Data) === JSON.stringify(r.data)) {
                 UpdateData( props.Data.id, FullName,Age,Email,PhoneNumber,Country,JobTitle)
                 props.Ref.current.close();
