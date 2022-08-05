@@ -109,11 +109,16 @@ class Workers extends Controller
      */
     public function FindById(Request $request)
     {
-        $id = response()->json($request->input('id'))->original;
-        $Data = Worker::where('id', $id)->first();
-        $Data->Country = Country::where('id', $Data->Country)->first()->Country;
-        $Data->JobTitle = Job_Title::where('id', $Data->JobTitle)->first()->Job;
-        return ($Data);
+        $A = $request->all();
+ 
+        if ($A['Time'] == Worker::where('id',$A['id'])->first()->updated_at){
+          return true;
+        }
+        else{
+            $Data = Worker::where('id', $A['id'])->first();
+            return ($Data);
+        }
+
     }
 
     /**
