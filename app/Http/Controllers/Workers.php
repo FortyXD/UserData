@@ -8,6 +8,7 @@ use App\Models\Worker;
 use Dflydev\DotAccessData\Data;
 use Faker\Core\Number;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use mysql_xdevapi\Exception;
 use PhpParser\Node\Scalar\String_;
 use function PHPUnit\Framework\isNull;
@@ -28,6 +29,7 @@ class Workers extends Controller
 //Есть также    $validatedData = $request->validate([ [). Что лучше, и когда лучше использовать это, нежели выше тип
     public function index()
     {
+
         $Data = Worker::all();
         foreach ($Data as $arr) {
             $arr->Country = Country::where('id', $arr->Country)->first()->Country;
@@ -110,7 +112,7 @@ class Workers extends Controller
     public function FindById(Request $request)
     {
         $A = $request->all();
- 
+
         if ($A['Time'] == Worker::where('id',$A['id'])->first()->updated_at){
           return true;
         }
@@ -246,6 +248,17 @@ class Workers extends Controller
                 }
         }
 
+    }
+    public function DeleteDataKey(){
+        $results = DB::select('select * from finduselesskey()' );
+
+        foreach ($results as &$a){
+            Job_Title::where('id',$a->finduselesskey)->delete();
+        }
+        $resultsCountry = DB::select('select * from find_country_key()' );
+        foreach ($resultsCountry as &$a){
+            Country::where('id',$a->find_country_key)->delete();
+        }
     }
 }
 

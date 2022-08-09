@@ -43,6 +43,10 @@ Route::post('/CheckIfIsNew', [\App\Http\Controllers\Workers::class, 'CheckId']);
 Route::post('/CreateWorker',[\App\Http\Controllers\Workers::class,'create']);
 
 
+
+Route::post('/DeleteUselessDataKey',[\App\Http\Controllers\Workers::class,'DeleteDataKey']);
+
+
 //Удаление работникав
 Route::post('/DeleteWorker',[\App\Http\Controllers\Workers::class,'destroy']);
 //Регестрация

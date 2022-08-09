@@ -12,6 +12,10 @@ import ChangeKey from "./ChangeKey";
 
 
 class Table extends Component {
+    Delete_Useless_keys() {
+        axios.post('/DeleteUselessDataKey')
+
+    }
     constructor(props) {
         super(props);
         this.myRef = React.createRef();
@@ -195,6 +199,8 @@ class Table extends Component {
                             {this.state.KeyTableJob}
                             <h1>Данные о ключах Стран</h1>
                             {this.state.KeyTableCountry}
+
+                            <button className="btn btn-primary" onClick={async ()=>{await this.Delete_Useless_keys(); await this.GetData()}}>Удалить неиспользованные ключи</button>
                         </Popup>
 
 
